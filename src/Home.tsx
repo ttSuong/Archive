@@ -3,20 +3,20 @@ import React, { useEffect, useState } from "react";
 import { fetchMovies } from "./api/movie";
 import { MovieDto } from "./dto/Movie";
 import Movie, { MovieSkeleton } from "./Movie";
+import { useAppSelector } from "./app/hooks";
 
 const Home: React.FC = () => {
-
+	const token = useAppSelector(state => state.auth.token);
 	const [loading, setLoading] = useState(true);
 	const [movies, setMovies] = useState<MovieDto[]>([]);
 
 	useEffect(() => {
-		fetchMovies().then(response => {
-			console.log('Tony', response);
+		fetchMovies(token).then(response => {
 			setMovies(response);
 		}).finally(() => {
 			setLoading(false)
 		});
-	}, [])
+	}, [token])
 
 	return (
 		<Grid container rowSpacing={4}>

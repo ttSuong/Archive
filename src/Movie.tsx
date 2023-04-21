@@ -13,27 +13,27 @@ type MovieProps = {
 const Movie: React.FC<MovieProps> = ({ data }) => {
 	const token = useAppSelector(state => state.auth.token);
 
-	const onLikeMovie = (movieId: number, status: number) => {
+	const onLikeMovie = (movieId: number, status: string) => {
 		likeMovie(movieId, status, token);
 	}
 
 	return (
 		<Container>
-			<Box display='flex' gap={3} flexWrap='wrap'>
+			<Box display='flex' gap={3} flexWrap='nowrap'>
 				<Box flexBasis='450px'>
-					<iframe width='450' height='250' src="https://www.youtube.com/embed/YudHcBIxlYw" title="YouTube video player" frameBorder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"></iframe>
+					<iframe width='450' height='250' src={data.url} title="YouTube video player" frameBorder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"></iframe>
 				</Box>
 				<Box flexGrow={1}>
 					<Box>
 						<Typography variant='h5' style={{color: 'red'}}>
-							{data.name}
+							{data.title}
 						</Typography>
 					</Box>
-					<Box>Shared by: {data.email}</Box>
+					<Box>Shared by: {data.shared_by}</Box>
 					<Box display='flex' alignItems='center' gap={2}>
 						<Box display='flex' alignItems='center'>
 							<Typography variant="subtitle2">
-								{data.like}
+								{data.total_liked}
 							</Typography>
 							<IconButton size='small' disabled={!token} onClick={() => onLikeMovie(data.id, data.status === MovieLikeStatus.LIKED ? MovieLikeStatus.UNSET : MovieLikeStatus.LIKED)}>
 								<ThumbUpIcon color={data.status === MovieLikeStatus.LIKED ? 'primary' : 'inherit'}/>
@@ -45,11 +45,15 @@ const Movie: React.FC<MovieProps> = ({ data }) => {
 								<ThumbDownIcon color={data.status === MovieLikeStatus.DISLIKED ? 'error' : 'inherit'} />
 							</IconButton>
 							<Typography variant="subtitle2">
-								{data.dislike}
+								{data.total_disliked}
 							</Typography>
 						</Box>
 					</Box>
 					<Box>
+					<Typography variant='body2'>
+					Description: 
+						</Typography>
+
 						<Typography variant='body2'>
 							{data.description}
 						</Typography>

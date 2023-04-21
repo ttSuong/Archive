@@ -1,9 +1,10 @@
 export type MovieDto = {
 	id: number;
-	name: string;
-	email: string;
+	title: string;
+	shared_by: string;
 	description: string;
-	like: number;
-	dislike: number;
-	status: number;
+	total_liked: number;
+	total_disliked: number;
+	url: string;
+	status: string;
 }

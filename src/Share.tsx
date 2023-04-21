@@ -3,14 +3,21 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import ShareIcon from '@mui/icons-material/Share';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
+import { useAppSelector } from "./app/hooks";
+import { shareMovie } from "./api/movie";
 
 const Share: React.FC = () => {
 	const navigate = useNavigate()
 
 	const [url, setUrl] = useState('');
+	const token = useAppSelector(state => state.auth.token);
 
 	const onBack = () => {
 		navigate('/');
+	}
+
+	const onShareVideo = () => {
+		shareMovie(url, token);
 	}
 
 	return (
@@ -25,7 +32,7 @@ const Share: React.FC = () => {
 					</Grid>
 					<Grid item xs={12}>
 						<Box display='flex' gap={2} justifyContent='center'>
-							<Button color='primary' variant="contained">
+							<Button color='primary' variant="contained" onClick={onShareVideo}>
 								<ShareIcon /> {' '}
 								Share
 							</Button>

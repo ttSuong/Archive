@@ -1,5 +1,5 @@
 export const MovieLikeStatus = {
-	UNSET: 0,
-	LIKED: 1,
-	DISLIKED: 2,
+	UNSET: 'unset',
+	LIKED: 'like',
+	DISLIKED: 'dislike',
 }
