@@ -42,6 +42,7 @@ const Header: React.FC = () => {
 
 	const onLogout = () => {
 		dispatch(logout());
+		onGoHome();
 	}
 
 	const onGoHome = () => {

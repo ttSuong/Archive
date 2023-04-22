@@ -10,6 +10,11 @@ const Home: React.FC = () => {
 	const [loading, setLoading] = useState(true);
 	const [movies, setMovies] = useState<MovieDto[]>([]);
 
+	const onUpdate = (newData: MovieDto, idx: number) => {
+		movies[idx] = {...newData};
+		setMovies([...movies]);
+	}
+
 	useEffect(() => {
 		fetchMovies(token).then(response => {
 			setMovies(response);
@@ -26,9 +31,9 @@ const Home: React.FC = () => {
 				</Grid>
 			))}
 
-			{!loading && movies.map(m => (
+			{!loading && movies.map((m, idx) => (
 				<Grid item xs={12} key={m.id}>
-					<Movie data={m} />
+					<Movie data={m} onUpdate={(newData) => onUpdate(newData, idx)} />
 				</Grid>
 			))}
 		</Grid>

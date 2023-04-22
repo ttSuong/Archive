@@ -8,13 +8,17 @@ import { likeMovie } from "./api/movie";
 
 type MovieProps = {
 	data: MovieDto;
+	onUpdate: (newData: MovieDto) => void;
 }
 
-const Movie: React.FC<MovieProps> = ({ data }) => {
+const Movie: React.FC<MovieProps> = ({ data, onUpdate }) => {
 	const token = useAppSelector(state => state.auth.token);
 
 	const onLikeMovie = (movieId: number, status: string) => {
-		likeMovie(movieId, status, token);
+		likeMovie(movieId, status, token)
+			.then(response => {
+				onUpdate(response);
+			});
 	}
 
 	return (
@@ -51,7 +55,7 @@ const Movie: React.FC<MovieProps> = ({ data }) => {
 					</Box>
 					<Box>
 					<Typography variant='body2'>
-					Description: 
+						Description: 
 						</Typography>
 
 						<Typography variant='body2'>
